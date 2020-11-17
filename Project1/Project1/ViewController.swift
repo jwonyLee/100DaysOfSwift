@@ -37,4 +37,15 @@ class ViewController: UITableViewController {
         cell.textLabel?.text = pictures[indexPath.row]
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 1: Detail 뷰 컨트롤러 로딩 시도 && DetailViewController로 타입 캐스팅
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
+            // 2: 성공! selectedImage 프로퍼티 설정
+            vc.selectedImage = pictures[indexPath.row]
+            
+            // 3: navigation controller로 push
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
