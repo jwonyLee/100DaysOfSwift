@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     var countries = [String]()
+    var correctAnswer = 0
     var score = 0
 
     // MARK: - @IBOutlet Properties
@@ -31,12 +32,15 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         askQuestion()
+        title = countries[correctAnswer].uppercased()
     }
 
     func askQuestion(action: UIAlertAction! = nil) {
+        countries.shuffle()
         button1.setImage(UIImage(named: countries[0]), for: .normal)
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
