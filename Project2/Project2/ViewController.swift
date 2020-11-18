@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     var countries = [String]()
     var correctAnswer = 0
     var score = 0
+    var gameCount = 0
 
     // MARK: - @IBOutlet Properties
     @IBOutlet weak var button1: UIButton!
@@ -32,7 +33,6 @@ class ViewController: UIViewController {
         
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco", "nigeria", "poland", "russia", "spain", "uk", "us"]
         askQuestion()
-        title = countries[correctAnswer].uppercased()
     }
 
     func askQuestion(action: UIAlertAction! = nil) {
@@ -41,22 +41,41 @@ class ViewController: UIViewController {
         button2.setImage(UIImage(named: countries[1]), for: .normal)
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         correctAnswer = Int.random(in: 0...2)
+        
+        // *: 타이틀에 correctAnswer와 플레이어 점수 표시
+        title = "\(countries[correctAnswer].uppercased()), now score: \(score)"
+        gameCount += 1
     }
     
+    // *: 잘못된 국가를 선택하면 경고 메세지에 정답 알려주기
     @IBAction func buttonTapped(_ sender: Any) {
         var title: String
+        var message: String
         
         if let sender = sender as? UIButton, sender.tag == correctAnswer {
             title = "Correct"
+            message = "Your score is \(score)."
             score += 1
         } else {
             title = "Wrong"
+            message = "Wrong! That's the flag of \(countries[correctAnswer]), Your score is \(score)."
             score -= 1
         }
         
-        let alert = UIAlertController(title: title, message: "Your score is \(score).", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
-        present(alert, animated: true, completion: nil)
+        // *: 10번의 게임 진행 후, 최종 결과 알려주기
+        if self.gameCount == 10 {
+            let alert = UIAlertController(title: "Final score", message: "Your score is \(self.score).", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        } else {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
+            present(alert, animated: true)
+        }
+    }
+    
+    func endGame() {
+        
     }
 }
 

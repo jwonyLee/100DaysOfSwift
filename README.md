@@ -4,3 +4,4 @@
 | Project |
 | -------- |
 | [Project1: Storm Viewer](./Project1) |
+| [Project2: Guess the Flag](./Project2) |
