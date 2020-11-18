@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(scoreTapped))
+        
         button1.layer.borderWidth = 1
         button2.layer.borderWidth = 1
         button3.layer.borderWidth = 1
@@ -74,8 +76,11 @@ class ViewController: UIViewController {
         }
     }
     
-    func endGame() {
-        
+    // *: Project 3 Challenge
+    @objc func scoreTapped() {
+        let alert = UIAlertController(title: "Score", message: "Your score is \(self.score)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
     }
 }
 
