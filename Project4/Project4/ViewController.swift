@@ -12,6 +12,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     var webView: WKWebView!
     var progressView: UIProgressView!
+    var websites = ["apple.com", "google.com"]
 
     override func loadView() {
         webView = WKWebView()
@@ -40,7 +41,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         toolbarItems = [progressButton, spacer, refresh]
         navigationController?.isToolbarHidden = false
 
-        let url = URL(string: "https://google.com")!
+        let url = URL(string: "https://" + websites[0])!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
 
@@ -60,12 +61,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let alertController = UIAlertController(title: "Open page...",
                                                 message: nil,
                                                 preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "apple.com",
-                                                style: .default,
-                                                handler: openPage))
-        alertController.addAction(UIAlertAction(title: "google.com",
-                                                style: .default,
-                                                handler: openPage))
+        for website in websites {
+            alertController.addAction(UIAlertAction(title: website,
+                                                    style: .default,
+                                                    handler: openPage))
+        }
         alertController.addAction(UIAlertAction(title: "Cancle",
                                                 style: .cancel))
         alertController.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
@@ -79,5 +79,23 @@ class ViewController: UIViewController, WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         title = webView.title
+    }
+
+    // 어떤 일이 발생할 때마다 네비게이션을 허용할지 여부를 결정할 수 있음
+    // - 페이지의 어느 부분이 탐색을 시작했는지 확인할 수 있음
+    // - 링크를 클릭하거나 양식을 제출하여 트리거되었는지 여부를 확인할 수 있음
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.url
+
+        if let host = url?.host {
+            for website in websites {
+                if host.contains(website) {
+                    decisionHandler(.allow)
+                    return
+                }
+            }
+        }
+
+        decisionHandler(.cancel)
     }
 }
