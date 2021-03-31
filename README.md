@@ -11,7 +11,7 @@
 
 ## [Project3: Storm Viewer+](./Project3)
 
-<img style="width: 300px;" src="images/Project3-1.png">
+<img src="images/Project3-1.png" width="300px">
 
 ## [Milestone1: Project1~3](./milestone1)
 
