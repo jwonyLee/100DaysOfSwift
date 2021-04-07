@@ -104,6 +104,11 @@ class ViewController: UITableViewController {
     }
 
     func isReal(word: String) -> Bool {
+        // 세 글자보다 짧은 경우 || 시작 단어와 같은 경우
+        if word.utf16.count < 3 || word == title {
+            return false
+        }
+
         // UITextChecker - 맞춤법 오류를 발견하도록 만들어진 iOS 클래스
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
