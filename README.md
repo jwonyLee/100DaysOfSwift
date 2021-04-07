@@ -27,3 +27,7 @@
 ## [Project4: Easy Browser](./Project4)
 
 <img src="images/Project4-1.png" width="50%"><img src="images/Project4-2.png" width="50%">
+
+## [Project5: Word Scramble](./Project5)
+
+<img src="images/Project5-1.png" width="25%"><img src="images/Project5-2.png" width="25%"><img src="images/Project5-3.png" width="25%"><img src="images/Project5-4.png" width="25%">
